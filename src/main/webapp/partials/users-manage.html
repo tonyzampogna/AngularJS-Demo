@@ -1,0 +1,59 @@
+<h1>Manage Users</h1>
+
+<h4>Add a User</h4>
+<form class="form-inline" role="form">
+	<div class="form-group">
+		<label class="sr-only" for="username">Username</label>
+		<input type="text" class="form-control" id="username"
+			placeholder="Enter username" ng-model="newUser.username">
+	</div>
+	<div class="form-group">
+		<label class="sr-only" for="password">Password</label>
+		<input type="password" class="form-control" id="password"
+			placeholder="Password" ng-model="newUser.password">
+	</div>
+	<button type="submit" class="btn btn-default" ng-click="addUser(newUser)">Add User</button>
+</form>
+
+<h4>Users</h4>
+<form class="form-inline" role="form">
+	<div class="form-group">
+		<label class="sr-only" for="filter">Filter by username</label>
+		Filter by username <input type="text" class="form-control" id="filter"
+			placeholder="Enter username" ng-model="search.username">
+	</div>
+</form>
+<br/>
+<div>
+	<pagination total-items="totalPaginationItems" page="currentPage" max-size="maxSize" items-per-page="itemsPerPage" class="pagination-sm" boundary-links="true"></pagination>
+</div>
+<table class="table table-striped">
+	<tr>
+		<th>ID</th>
+		<th>Username</th>
+		<th>Password</th>
+		<th>Email</th>
+		<th>&nbsp;</th>
+	</tr>
+	<tr ng-repeat="user in users | filter:search | limitTo: (currentPage * itemsPerPage) | limitTo: -itemsPerPage">
+		<td class="text-muted"><a href="#/user/{{user.id}}">{{user.id}}</a></td>
+		<td>{{user.username}}</td>
+		<td>{{user.password}}</td>
+		<td>{{user.email}}</td>
+		<td><span ng-click="deleteUser(user)" class="glyphicon glyphicon-remove" style="cursor: pointer;"></span></td>
+	</tr>
+</table>
+<div>
+	<pagination total-items="totalPaginationItems" page="currentPage" max-size="maxSize" items-per-page="itemsPerPage" class="pagination-sm" boundary-links="true"></pagination>
+</div>
+<button type="submit" class="btn btn-default" ng-click="getUsers()">Get All Users</button>
+
+<h4>Search for user</h4>
+<form class="form-inline" role="form">
+	<div class="form-group">
+		<label class="sr-only" for="username">Username</label>
+		<input type="text" class="form-control" id="searchValue"
+			placeholder="" ng-model="searchValue">
+	</div>
+	<button type="submit" class="btn btn-default" ng-click="searchUsers(searchValue)">Search</button>
+</form>
